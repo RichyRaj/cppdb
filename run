@@ -1,0 +1,12 @@
+#!/bin/bash
+echo ""
+echo "Removing previous build"
+make clean
+echo ""
+echo "Building CPPDB..."
+make
+echo ""
+echo "Build Success"
+echo ""
+echo "Executing ..."
+./build/apps/cppdb
