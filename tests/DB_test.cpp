@@ -3,13 +3,15 @@
 // Licensed under the MIT license. See LICENSE file for details.
 //
 
-#include "cppdb/status.h"
 #include <cassert>
 #include <iostream>
+#include "cppdb/status.h"
+#include "cppdb/fileBackend.h"
 
 int main() {
-  // Status Tests
   cppdb::Status s;
+
+  // Status Tests
   assert(s.isNone());
   s = cppdb::Status::OK();
   assert(s.isOk());
@@ -17,4 +19,9 @@ int main() {
   assert(s.isError());
   std::cout << "Status tests pass" << std::endl;
   // ===========================================================================
+  // File Tests
+  cppdb::FileBackend b;
+  s = b.open("./first.db");
+  assert(s.isOk());
+  std::cout << "File tests pass" << std::endl;
 }
