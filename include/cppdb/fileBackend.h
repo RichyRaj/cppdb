@@ -18,8 +18,9 @@ class FileBackend {
  public:
     FileBackend() {}
     cppdb::Status open(const std::string&);
+    cppdb::Status put(const std::string&, const std::string&);
     bool isOk();
  private:
     std::fstream f;
 };
-}
+}  // namespace cppdb

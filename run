@@ -1,4 +1,5 @@
 #!/bin/bash
+./lint
 echo ""
 echo "Removing previous build"
 make clean

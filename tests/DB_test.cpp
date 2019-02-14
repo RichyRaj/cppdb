@@ -23,5 +23,9 @@ int main() {
   cppdb::FileBackend b;
   s = b.open("./first.db");
   assert(s.isOk());
+  s = b.put("Carrick", "16");
+  assert(s.isOk());
+  s = b.put("Messi", "10");
+  assert(s.isOk());
   std::cout << "File tests pass" << std::endl;
 }
