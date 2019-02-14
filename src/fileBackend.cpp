@@ -13,8 +13,19 @@ cppdb::Status cppdb::FileBackend::open(const std::string& name) {
   if (name.empty()) {
     return cppdb::Status::Error();
   }
+  if (f.is_open()) {
+      f.close();
+  }
   f.open(name,  std::fstream::app);
   // f.close();
+  if (isOk()) {
+    return cppdb::Status::OK();
+  }
+  return cppdb::Status::Error();
+}
+
+cppdb::Status cppdb::FileBackend::close() {
+  f.close();
   if (isOk()) {
     return cppdb::Status::OK();
   }

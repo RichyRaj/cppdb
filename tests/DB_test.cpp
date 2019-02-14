@@ -27,5 +27,7 @@ int main() {
   assert(s.isOk());
   s = b.put("Messi", "10");
   assert(s.isOk());
+  s = b.close();
+  assert(s.isOk());
   std::cout << "File tests pass" << std::endl;
 }

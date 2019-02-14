@@ -18,6 +18,7 @@ class FileBackend {
  public:
     FileBackend() {}
     cppdb::Status open(const std::string&);
+    cppdb::Status close();
     cppdb::Status put(const std::string&, const std::string&);
     bool isOk();
  private:
