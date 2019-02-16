@@ -4,28 +4,26 @@
 //
 
 /**
-Defines a File Based Storage Engine for the DB
+Defines a Hash Table based indexer for the file backend
 **/
 
 #pragma once
 
-#include <fstream>
-#include <string>
 #include <unordered_map>
-#include <sstream>
 #include <iostream>
+#include <string>
 #include "cppdb/status.h"
+#include "cppdb/fileBackend.h"
 
 namespace cppdb {
-class FileBackend {
+class HashIndex {
  public:
-    FileBackend() {}
+    explicit HashIndex(cppdb::FileBackend& fb) : f(fb) {}
     cppdb::Status open(const std::string&);
     cppdb::Status close();
     cppdb::Status put(const std::string&, const std::string&);
-    cppdb::Status buildIndex(std::unordered_map<std::string, int>*);
-    bool isOk();
  private:
-    std::fstream f;
+    std::unordered_map<std::string, int> index;
+    cppdb::FileBackend& f;
 };
 }  // namespace cppdb

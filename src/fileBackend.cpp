@@ -3,7 +3,6 @@
 // Licensed under the MIT license. See LICENSE file for details.
 //
 
-#include <iostream>
 #include "cppdb/fileBackend.h"
 
 cppdb::Status cppdb::FileBackend::open(const std::string &name) {
@@ -16,7 +15,7 @@ cppdb::Status cppdb::FileBackend::open(const std::string &name) {
   if (f.is_open()) {
     f.close();
   }
-  f.open(name, std::fstream::app);
+  f.open(name, std::fstream::in | std::fstream::out | std::fstream::app);
   // f.close();
   if (isOk()) {
     return cppdb::Status::OK();
@@ -41,6 +40,30 @@ cppdb::Status cppdb::FileBackend::put(const std::string &key,
     return cppdb::Status::Error();
   }
   f << key << "," << value << std::endl;
+  if (isOk()) {
+    return cppdb::Status::OK();
+  }
+  return cppdb::Status::Error();
+}
+
+cppdb::Status cppdb::FileBackend::buildIndex(
+  std::unordered_map<std::string, int>* index) {
+  int currentOffset = 0;
+  std::string line;
+  while (std::getline(f, line)) {
+    std::stringstream linestream(line);
+    std::string key;
+    std::getline(linestream, key, ',');
+    (*index)[key] = currentOffset;
+    // next offset
+    int noChars(line.length() + 1);
+    currentOffset += noChars;
+  }
+  // f.clear();
+  // f.seekg(1071, std::ios::beg);
+  // std::getline(f, line);
+  // std::cout << "Testing the build .... " << line << std:: endl;
+
   if (isOk()) {
     return cppdb::Status::OK();
   }

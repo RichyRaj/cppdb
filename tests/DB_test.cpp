@@ -7,6 +7,7 @@
 #include <iostream>
 #include "cppdb/status.h"
 #include "cppdb/fileBackend.h"
+#include "cppdb/hashIndex.h"
 
 int main() {
   cppdb::Status s;
@@ -30,4 +31,8 @@ int main() {
   s = b.close();
   assert(s.isOk());
   std::cout << "File tests pass" << std::endl;
+  // ===========================================================================
+  // Index Tests
+  cppdb::HashIndex h(b);
+  s = h.open("./first.db");  
 }
