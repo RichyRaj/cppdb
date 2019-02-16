@@ -35,10 +35,32 @@ int main() {
   // ===========================================================================
   // Index Tests
   cppdb::HashIndex h(b);
+  std::string v;
   s = h.open("./first.db");
   assert(s.isOk());
   s = h.put("Ronaldo", "7");
   assert(s.isOk());
   s = h.put("De Gea", "1");
   assert(s.isOk());
+  v = h.get("De Gea");
+  assert(v == "1");
+
+  s = h.close();
+  assert(s.isOk());
+
+  s = h.open("./firstTest.db");
+  assert(s.isOk());
+  s = h.put("Ronaldo", "7");
+  assert(s.isOk());
+  s = h.put("Ibra", "9");
+  assert(s.isOk());
+  v = h.get("Ibra");
+  assert(v == "9");
+  s = h.put("Ronaldo", "9");
+  assert(s.isOk());
+  v = h.get("Ronaldo");
+  assert(v == "9");
+  // s = h.put("Manchester United", "{'trophies': 20, 'win': 100}");
+  // std::cout << h.get("Manchester United") << std::endl;
 }
+// ===========================================================================

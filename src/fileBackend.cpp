@@ -24,6 +24,8 @@ cppdb::Status cppdb::FileBackend::open(const std::string &name) {
 }
 
 cppdb::Status cppdb::FileBackend::close() {
+  // TODO(richardraj): Check and remove ....
+  f.clear();
   f.close();
   if (isOk()) {
     return cppdb::Status::OK();
@@ -31,40 +33,22 @@ cppdb::Status cppdb::FileBackend::close() {
   return cppdb::Status::Error();
 }
 
-int cppdb::FileBackend::put(const std::string &key,
-const std::string &value) {
-  if (key.empty() || value.empty()) {
-    return -1;
-  }
-  if (!isOk()) {
-    return -1;
-  }
-  f << key << "," << value << std::endl;
-  // 1 for comma. 1 for new line
-  currentOffset += key.length() + 1 + value.length() + 1;
-  if (!isOk()) {
-    return -1;
-  }
-  return currentOffset;
-}
-
 cppdb::Status cppdb::FileBackend::buildIndex(
   std::unordered_map<std::string, int>* index) {
-  currentOffset = 0;
+  nextOffset = 0;
   std::string line;
   while (std::getline(f, line)) {
     std::stringstream linestream(line);
     std::string key;
     std::getline(linestream, key, ',');
-    (*index)[key] = currentOffset;
+    (*index)[key] = nextOffset;
     // next offset
     int noChars(line.length() + 1);
-    currentOffset += noChars;
+    nextOffset += noChars;
   }
   // f.clear();
   // f.seekg(1071, std::ios::beg);
   // std::getline(f, line);
-  // std::cout << "Testing the build .... " << line << std:: endl;
   //
   // TODO(richardraj): calls to seekg requrie this. Read more on this. Remove
   // once get is implemented..
@@ -74,6 +58,41 @@ cppdb::Status cppdb::FileBackend::buildIndex(
     return cppdb::Status::OK();
   }
   return cppdb::Status::Error();
+}
+
+int cppdb::FileBackend::put(const std::string &key,
+const std::string &value) {
+  int currentOffset = nextOffset;
+  if (key.empty() || value.empty()) {
+    return -1;
+  }
+  if (!isOk()) {
+    return -1;
+  }
+  f << key << "," << value << std::endl;
+  // 1 for comma. 1 for new line
+  nextOffset += key.length() + 1 + value.length() + 1;
+  if (!isOk()) {
+    return -1;
+  }
+  return currentOffset;
+}
+
+/**
+Given an offset, gets the line and returns the value 
+*/
+std::string cppdb::FileBackend::get(int offset) {
+  // offset = 1071;
+  std::string line;
+  f.clear();
+  f.seekg(offset, std::ios::beg);
+  std::getline(f, line);
+  std::stringstream linestream(line);
+  std::string key;
+  std::string value;
+  std::getline(linestream, key, ',');
+  linestream >> value;
+  return value;
 }
 
 bool cppdb::FileBackend::isOk() const {

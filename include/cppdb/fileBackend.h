@@ -19,15 +19,16 @@ Defines a File Based Storage Engine for the DB
 namespace cppdb {
 class FileBackend {
  public:
-    FileBackend() : f(), currentOffset(0) {}
+    FileBackend() : f(), nextOffset(0) {}
     cppdb::Status open(const std::string&);
     cppdb::Status close();
     cppdb::Status buildIndex(std::unordered_map<std::string, int>*);
 
     int put(const std::string&, const std::string&);
+    std::string get(int offset);
     bool isOk() const;
  private:
     std::fstream f;
-    int currentOffset;
+    int nextOffset;
 };
 }  // namespace cppdb
