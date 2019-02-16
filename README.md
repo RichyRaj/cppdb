@@ -59,6 +59,8 @@ int main() {
 - [ ] Better handling of errors.
 - [ ] Review fileStream.clear().
 - [ ] Support Config based opertaions.
+- [ ] Remove old data in file
+- [ ] Crash recovery
 - [ ] Mutlithreading ?
 
 ---

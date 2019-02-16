@@ -16,7 +16,6 @@ cppdb::Status cppdb::FileBackend::open(const std::string &name) {
     f.close();
   }
   f.open(name, std::fstream::in | std::fstream::out | std::fstream::app);
-  // f.close();
   if (isOk()) {
     return cppdb::Status::OK();
   }
@@ -40,16 +39,12 @@ cppdb::Status cppdb::FileBackend::buildIndex(
   while (std::getline(f, line)) {
     std::stringstream linestream(line);
     std::string key;
-    std::getline(linestream, key, ',');
+    key = line.substr(0, line.find(','));
     (*index)[key] = nextOffset;
     // next offset
     int noChars(line.length() + 1);
     nextOffset += noChars;
   }
-  // f.clear();
-  // f.seekg(1071, std::ios::beg);
-  // std::getline(f, line);
-  //
   // TODO(richardraj): calls to seekg requrie this. Read more on this. Remove
   // once get is implemented..
   f.clear();

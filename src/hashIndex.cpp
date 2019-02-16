@@ -18,15 +18,6 @@ cppdb::Status cppdb::HashIndex::open(const std::string& name) {
     // backend is ready
     // loop through the contents and build the index
     s = f.buildIndex(&index);
-
-    // TODO(richardraj): Remove
-    // std::cout << =================== INDEX ==============================="
-    // << std::endl;
-    // for (auto const& x : index) {
-    //     std::cout << x.first << " ---- " << x.second << std::endl;
-    // }
-    // std::cout << "=================== INDEX ============================="
-    // << std::endl;
     return s;
 }
 
