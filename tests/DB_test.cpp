@@ -61,6 +61,7 @@ int main() {
   assert(s.isOk());
   v = h.get("Ronaldo");
   assert(v == "9");
+  std::cout << "Index tests pass" << std::endl;
   // ===========================================================================
   // Library Tests
   cppdb::DB db;
@@ -82,8 +83,9 @@ int main() {
   assert(v == "1");
   s = db.update("Anthony Marial", "11");
   v = db.get("Anthony Marial");
-  assert(v == "11");  
+  assert(v == "11");
   s = db.close();
   assert(s.isOk());
+  std::cout << "Library tests pass" << std::endl;
   // ===========================================================================
 }

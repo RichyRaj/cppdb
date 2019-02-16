@@ -1,8 +1,6 @@
 #!/bin/bash
 echo "Validating Style ..."
-echo ""
 cpplint tests/*.cpp
 cpplint src/*.cpp
 cpplint include/cppdb/*.h
-echo ""
 echo "Style Validation Completed"

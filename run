@@ -6,7 +6,6 @@ make clean
 echo ""
 echo "Building CPPDB..."
 make
-echo ""
 echo "Build Success"
 echo ""
 echo "Executing ..."

@@ -14,9 +14,7 @@
 namespace cppdb {
 class DB {
  public:
-    DB()  : f(), h(f), isOpen(false) {
-       std::cout << "Hey This is .." << std::endl;
-    }
+    DB()  : f(), h(f), isOpen(false) {}
     cppdb::Status open(const std::string&);
     cppdb::Status close();
     cppdb::Status put(const std::string&, const std::string&);

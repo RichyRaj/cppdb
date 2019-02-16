@@ -20,13 +20,13 @@ cppdb::Status cppdb::HashIndex::open(const std::string& name) {
     s = f.buildIndex(&index);
 
     // TODO(richardraj): Remove
-    std::cout << "=================== INDEX ================================="
-    << std::endl;
-    for (auto const& x : index) {
-        std::cout << x.first << " ---- " << x.second << std::endl;
-    }
-    std::cout << "=================== INDEX ================================="
-    << std::endl;
+    // std::cout << =================== INDEX ==============================="
+    // << std::endl;
+    // for (auto const& x : index) {
+    //     std::cout << x.first << " ---- " << x.second << std::endl;
+    // }
+    // std::cout << "=================== INDEX ============================="
+    // << std::endl;
     return s;
 }
 
