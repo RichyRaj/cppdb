@@ -8,6 +8,7 @@
 #include "cppdb/status.h"
 #include "cppdb/fileBackend.h"
 #include "cppdb/hashIndex.h"
+#include "cppdb/db.h"
 
 int main() {
   cppdb::Status s;
@@ -62,5 +63,26 @@ int main() {
   assert(v == "9");
   // s = h.put("Manchester United", "{'trophies': 20, 'win': 100}");
   // std::cout << h.get("Manchester United") << std::endl;
+  // ===========================================================================
+  // Library Tests
+  cppdb::DB db;
+  s = db.open("/tmp/players.db");
+  assert(s.isOk());
+  s = db.put("David De Gea", "1");
+  assert(s.isOk());
+  s = db.put("Victor Lindelof", "2");
+  assert(s.isOk());
+  s = db.put("Ander Herrera", "21");
+  assert(s.isOk());
+  s = db.put("Paul Pogba", "6");
+  assert(s.isOk());
+  s = db.put("Anthony Marial", "9");
+  assert(s.isOk());
+  v = db.get("Anthony Marial");
+  assert(v == "9");
+  v = db.get("David De Gea");
+  assert(v == "1");
+  s = db.close();
+  assert(s.isOk());
+  // ===========================================================================
 }
-// ===========================================================================
