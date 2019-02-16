@@ -29,6 +29,14 @@ cppdb::Status cppdb::DB::put(const std::string& key, const std::string& value) {
     return cppdb::Status::Error();
 }
 
+cppdb::Status cppdb::DB::update(const std::string& key,
+const std::string& value) {
+    if (h.find(key)) {
+        return h.put(key, value);
+    }
+    throw std::string("ERROR: Key Not Found");
+}
+
 std::string cppdb::DB::get(const std::string& key) {
     if (key.length()) {
         return h.get(key);

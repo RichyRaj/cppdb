@@ -23,6 +23,7 @@ class HashIndex {
     cppdb::Status close();
     cppdb::Status put(const std::string&, const std::string&);
     std::string get(const std::string&);
+    bool find(const std::string&);
  private:
     std::unordered_map<std::string, int> index;
     cppdb::FileBackend& f;

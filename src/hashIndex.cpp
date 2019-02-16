@@ -56,3 +56,7 @@ std::string cppdb::HashIndex::get(const std::string& key) {
     }
     return f.get(index[key]);
 }
+
+bool cppdb::HashIndex::find(const std::string& key) {
+    return !(index.find(key) == index.end());
+}

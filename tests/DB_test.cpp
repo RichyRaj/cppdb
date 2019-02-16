@@ -61,8 +61,6 @@ int main() {
   assert(s.isOk());
   v = h.get("Ronaldo");
   assert(v == "9");
-  // s = h.put("Manchester United", "{'trophies': 20, 'win': 100}");
-  // std::cout << h.get("Manchester United") << std::endl;
   // ===========================================================================
   // Library Tests
   cppdb::DB db;
@@ -82,6 +80,9 @@ int main() {
   assert(v == "9");
   v = db.get("David De Gea");
   assert(v == "1");
+  s = db.update("Anthony Marial", "11");
+  v = db.get("Anthony Marial");
+  assert(v == "11");  
   s = db.close();
   assert(s.isOk());
   // ===========================================================================

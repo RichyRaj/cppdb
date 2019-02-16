@@ -20,6 +20,7 @@ class DB {
     cppdb::Status open(const std::string&);
     cppdb::Status close();
     cppdb::Status put(const std::string&, const std::string&);
+    cppdb::Status update(const std::string&, const std::string&);
     std::string get(const std::string&);
  private:
     cppdb::FileBackend f;
