@@ -31,24 +31,26 @@ cppdb::Status cppdb::FileBackend::close() {
   return cppdb::Status::Error();
 }
 
-cppdb::Status cppdb::FileBackend::put(const std::string &key,
-                                      const std::string &value) {
+int cppdb::FileBackend::put(const std::string &key,
+const std::string &value) {
   if (key.empty() || value.empty()) {
-    return cppdb::Status::Error();
+    return -1;
   }
   if (!isOk()) {
-    return cppdb::Status::Error();
+    return -1;
   }
   f << key << "," << value << std::endl;
-  if (isOk()) {
-    return cppdb::Status::OK();
+  // 1 for comma. 1 for new line
+  currentOffset += key.length() + 1 + value.length() + 1;
+  if (!isOk()) {
+    return -1;
   }
-  return cppdb::Status::Error();
+  return currentOffset;
 }
 
 cppdb::Status cppdb::FileBackend::buildIndex(
   std::unordered_map<std::string, int>* index) {
-  int currentOffset = 0;
+  currentOffset = 0;
   std::string line;
   while (std::getline(f, line)) {
     std::stringstream linestream(line);
@@ -63,6 +65,10 @@ cppdb::Status cppdb::FileBackend::buildIndex(
   // f.seekg(1071, std::ios::beg);
   // std::getline(f, line);
   // std::cout << "Testing the build .... " << line << std:: endl;
+  //
+  // TODO(richardraj): calls to seekg requrie this. Read more on this. Remove
+  // once get is implemented..
+  f.clear();
 
   if (isOk()) {
     return cppdb::Status::OK();
@@ -70,7 +76,7 @@ cppdb::Status cppdb::FileBackend::buildIndex(
   return cppdb::Status::Error();
 }
 
-bool cppdb::FileBackend::isOk() {
+bool cppdb::FileBackend::isOk() const {
   if (!f || !f.good() || f.fail()) {
     return false;
   }

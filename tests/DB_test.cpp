@@ -22,11 +22,12 @@ int main() {
   // ===========================================================================
   // File Tests
   cppdb::FileBackend b;
+  int offset;
   s = b.open("./first.db");
   assert(s.isOk());
-  s = b.put("Carrick", "16");
+  offset = b.put("Carrick", "16");
   assert(s.isOk());
-  s = b.put("Messi", "10");
+  offset = b.put("Messi", "10");
   assert(s.isOk());
   s = b.close();
   assert(s.isOk());
@@ -34,5 +35,10 @@ int main() {
   // ===========================================================================
   // Index Tests
   cppdb::HashIndex h(b);
-  s = h.open("./first.db");  
+  s = h.open("./first.db");
+  assert(s.isOk());
+  s = h.put("Ronaldo", "7");
+  assert(s.isOk());
+  s = h.put("De Gea", "1");
+  assert(s.isOk());
 }

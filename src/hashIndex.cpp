@@ -39,3 +39,13 @@ cppdb::Status cppdb::HashIndex::close() {
     index.clear();
     return cppdb::Status::OK();
 }
+
+cppdb::Status cppdb::HashIndex::put(const std::string& key,
+const std::string& value) {
+    int offset = f.put(key, value);
+    if (offset == -1) {
+        return cppdb::Status::Error();
+    }
+    index[key] = offset;
+    return cppdb::Status::OK();
+}
