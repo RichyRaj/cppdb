@@ -67,8 +67,8 @@ int main() {
   cppdb::DB db;
   s = db.open("/tmp/players.db");
   assert(s.isOk());
-  // s = db.put("David De Gea", "1");
-  // assert(s.isOk());
+  s = db.put("David De Gea", "1");
+  assert(s.isOk());
   s = db.put("Victor Lindelof", "2");
   assert(s.isOk());
   s = db.put("Ander Herrera", "21");
