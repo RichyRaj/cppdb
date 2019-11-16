@@ -1,6 +1,6 @@
 CC = c++
 CCLAGS = -pedantic-errors -Wall -Wextra -Werror -std=c++11
-LDFLAGS = -L/usr/lib -lstdc++ -lm
+LDFLAGS = -L/usr/lib -lstdc++ -lm -pthread
 BUILD = ./build
 SRC_DIR=./src
 TEST_DIR=./tests

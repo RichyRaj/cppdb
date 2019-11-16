@@ -5,10 +5,38 @@
 
 #include <cassert>
 #include <iostream>
+#include <thread>
 #include "cppdb/status.h"
 #include "cppdb/fileBackend.h"
 #include "cppdb/hashIndex.h"
 #include "cppdb/db.h"
+
+void insertX(cppdb::DB& db) {
+  // Does 1000 x inserts
+  for (int i = 0; i < 100; i++) {
+    db.put("x", std::to_string(i));
+    std::cout << "Wrote" << i << std::endl;
+  }
+}
+
+void readX(cppdb::DB& db) {
+  // Reads x 1000 times
+  for (int i = 0; i < 100; i++) {
+    std::cout << "Reading " << db.get("x") << std::endl;
+  }
+}
+
+
+void testMultithreadPut() {
+  cppdb::DB db;
+  db.open("/tmp/mt.db");
+  db.put("x", "-1");
+  std::thread t1(insertX, std::ref(db));
+  std::thread t2(readX, std::ref(db));
+  t1.join();
+  t2.join();
+  db.close();
+}
 
 int main() {
   cppdb::Status s;
@@ -88,4 +116,6 @@ int main() {
   assert(s.isOk());
   std::cout << "Library tests pass" << std::endl;
   // ===========================================================================
+  testMultithreadPut();
+  std::cout << "Multi-Thread tests pass" << std::endl;
 }

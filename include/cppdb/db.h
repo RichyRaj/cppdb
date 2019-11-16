@@ -7,6 +7,7 @@
 #pragma once
 
 #include <string>
+#include <mutex>
 #include "cppdb/status.h"
 #include "cppdb/fileBackend.h"
 #include "cppdb/hashIndex.h"
@@ -23,6 +24,7 @@ class DB {
  private:
     cppdb::FileBackend f;
     cppdb::HashIndex h;
+    std::mutex m;
     bool isOpen;
 };
 }  // namespace cppdb
