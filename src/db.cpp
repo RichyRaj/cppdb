@@ -23,6 +23,7 @@ cppdb::Status cppdb::DB::close() {
 }
 
 cppdb::Status cppdb::DB::put(const std::string& key, const std::string& value) {
+    std::lock_guard<std::shared_timed_mutex> lg(m);
     if (key.length()) {
         return h.put(key, value);
     }
@@ -31,6 +32,7 @@ cppdb::Status cppdb::DB::put(const std::string& key, const std::string& value) {
 
 cppdb::Status cppdb::DB::update(const std::string& key,
 const std::string& value) {
+    std::lock_guard<std::shared_timed_mutex> lg(m); 
     if (h.find(key)) {
         return h.put(key, value);
     }
@@ -38,6 +40,7 @@ const std::string& value) {
 }
 
 std::string cppdb::DB::get(const std::string& key) {
+    std::shared_lock<std::shared_timed_mutex> lg(m);
     if (key.length()) {
         return h.get(key);
     }

@@ -7,6 +7,7 @@
 #pragma once
 
 #include <string>
+#include <shared_mutex>
 #include "cppdb/status.h"
 #include "cppdb/fileBackend.h"
 #include "cppdb/hashIndex.h"
@@ -21,6 +22,7 @@ class DB {
     cppdb::Status update(const std::string&, const std::string&);
     std::string get(const std::string&);
  private:
+    std::shared_timed_mutex m;
     cppdb::FileBackend f;
     cppdb::HashIndex h;
     bool isOpen;
