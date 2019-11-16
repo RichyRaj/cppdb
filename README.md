@@ -61,6 +61,6 @@ int main() {
 - [ ] Support Config based opertaions.
 - [ ] Remove old data in file
 - [ ] Crash recovery
-- [ ] Mutlithreading ?
+- [x] Mutlithreading ?
 
 ---
