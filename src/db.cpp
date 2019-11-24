@@ -42,7 +42,9 @@ const std::string& value) {
 std::string cppdb::DB::get(const std::string& key) {
     std::lock_guard<std::mutex> lg(m);
     if (key.length()) {
-        return h.get(key);
+        std::string val(h.get(key));
+        if (val.length()) 
+            return h.get(key);
     }
-    throw std::string("ERROR: Empty Key");
+    throw std::string("ERROR: Key Not Found");
 }

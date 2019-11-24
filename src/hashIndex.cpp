@@ -43,7 +43,7 @@ const std::string& value) {
 
 std::string cppdb::HashIndex::get(const std::string& key) {
     if (index.find(key) == index.end()) {
-        throw std::string("ERROR: Key not found");
+        return "";
     }
     return f.get(index[key]);
 }
