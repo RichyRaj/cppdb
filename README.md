@@ -1,13 +1,9 @@
 # cppdb
 #### A Simple Key-Value Store in C++
 
-A simple Key-Value Store written in C++ for learning 
-purposes. The storage mechanism is based on Chapter 3 of the
-[Designing Data-Intensive Applications](https://dataintensive.net/) book.
+**cppdb** is a thread-safe key-value store written in **C++** for learning purposes. Uses a log-structured file backend as the data store and an in-memory hash table index. cppdb comes with a multithreaded [TCP server](https://github.com/RichyRaj/cppdb/blob/master/server/server.cpp) that can be used to query GET / PUT requests over a network. 
 
-
-This key-value store uses a log based file backend and an in-memory 
-Hash Table based index. 
+The storage mechanism is based on Chapter 3 of the [Designing Data-Intensive Applications](https://dataintensive.net/) book.
 
 The project was inspired by :
 - [gerlacdt/db-key-value-store](https://github.com/gerlacdt/db-key-value-store)
@@ -56,11 +52,11 @@ int main() {
 
 - [ ] Add delete operation.
 - [ ] Add drop operation.
-- [ ] Better handling of errors.
+- [ ] Review error handling.
 - [ ] Review fileStream.clear().
 - [ ] Support Config based opertaions.
-- [ ] Remove old data in file
-- [ ] Crash recovery
+- [ ] Remove old data in file.
+- [ ] Crash recovery.
 - [x] Mutlithreading ?
 
 ---
